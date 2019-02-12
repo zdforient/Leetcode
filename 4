@@ -1,0 +1,27 @@
+class Solution:
+    def reverse(self, x: 'int') -> 'int':
+        if x > 2**31 - 1 or x < -2**31:
+            x  = 0
+        k = x
+        t = 1
+        num = 100000000000
+        ten = 1
+        ans = 0
+        b = 0
+        while k != 0:
+            num /= 10
+            a = int(k / num)
+            if a or b:
+                b = 1
+                ans += ten * a
+                ten *= 10
+            k = k - a * num
+        if ans > 2**31 - 1 or ans < -2**31:
+            ans = 0
+        return ans
+    def __init__(self):
+        sdsd = 1
+        
+S = Solution()
+x = 12300
+S.reverse(x)
