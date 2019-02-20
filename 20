@@ -1,0 +1,12 @@
+class Solution:
+    def isValid(self, s: 'str') -> 'bool':
+        t = []
+        d = ['()','{}','[]']
+        for i in s:
+            if (not t) or ((t[-1] + i) not in d):
+                t.append(i)
+            else:
+                t.pop()
+        return not t
+32ms, 100%  
+
