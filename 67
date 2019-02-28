@@ -1,0 +1,66 @@
+c++,100%
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        string s;
+        int an = a.length(), bn = b.length(),cn;
+        if(!an || !bn)
+            return a.insert(0,b);
+        if (an < bn){
+            cn = bn - an;
+            a.insert(0,b,0,bn - an);
+        }
+        else{
+            cn = an - bn;
+            b.insert(0,a,0,an - bn);
+            }
+        int z,x,c = 0;
+        for (int i = a.length();i >= 0; i --){
+            z = a[i] - '0';
+            if (i < cn)
+                z = 0;
+            x = b[i] - '0';
+            switch(z+c+x){
+                case 0: 
+                    s.insert(0,1,'0');
+                    c = 0;
+                    break;
+                case 1:
+                    s.insert(0,1,'1');
+                    c = 0;
+                    break;
+                case 2:
+                    s.insert(0,1,'0');
+                    c = 1;
+                    break;
+                case 3:
+                    s.insert(0,1,'1');
+                    c = 1;
+                    break;
+            }
+        }
+        if(c == 1)
+            s.insert(0,1,'1');
+        return s;
+    }
+};
+beat:
+class Solution
+{
+public:
+    string addBinary(string a, string b)
+    {
+        string s = "";
+        
+        int c = 0, i = a.size() - 1, j = b.size() - 1;
+        while(i >= 0 || j >= 0 || c == 1)
+        {
+            c += i >= 0 ? a[i --] - '0' : 0;
+            c += j >= 0 ? b[j --] - '0' : 0;
+            s = char(c % 2 + '0') + s;
+            c /= 2;
+        }
+        
+        return s;
+    }
+};
