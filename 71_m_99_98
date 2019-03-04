@@ -1,0 +1,106 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        if(path.length() < 2)
+            return path;
+        char a,b,c='/';
+        int change=-1,isa=0,isddot=0,issdot = 0,isk = 0;
+        string s;
+        int k = 0;
+        for(int i = path.length() - 1;i > 0; i--){
+            a = path[i];
+            b = path[i-1];
+            switch(a){
+                case '/': 
+                    if (isa == 1){
+                        if (!k)
+                            s.insert(0,1,a);
+                        else{
+                            k --;
+                        }
+                        c = '/';
+                        isa = 0;
+                        break;
+                    }
+                    else if (isddot){
+                        k++;
+                        isddot = 0;
+                        c = '/';
+                        break;
+                    }
+                    else if (issdot){
+                        c = '/';
+                        issdot = 0;
+                        break;
+                    }
+                    else
+                        break;
+                case '.':
+                    if(isddot & !k){
+                        isa = 1;
+                        isddot = 0;
+                        s.insert(0,1,a);
+                        s.insert(0,1,a);
+                        s.insert(0,1,a);
+                        break;
+                    }
+                    if(isddot){
+                        isa = 1;
+                        isddot = 0;
+                        break; 
+                    }
+                    else if(isa & !k){
+                        
+                        s.insert(0,1,a);
+                        break;
+                    }
+                    else if(isa){
+                        break;
+                    }
+                    else if(issdot){
+                        isddot = 1;
+                        issdot = 0;
+                        break;
+                    }
+                    else if(c == '/'){
+                        issdot = 1;
+                        c = 'a';
+                        break;
+                    }
+                default:
+                    
+                    if(k){
+                        isa = 1;
+                        c = 'a';
+                        break;
+                    }
+                    if(isddot){
+                        isa = 1;
+                        isddot = 0;
+                        s.insert(0,1,'.');
+                        s.insert(0,1,'.');
+                        s.insert(0,1,a);
+                        c = 'a';
+                        break;
+                    }
+                    else if(isa || c== '/'){
+                        s.insert(0,1,a);
+                        isa = 1;
+                        c = 'a';
+                        break;
+                    }
+                    else if(issdot){
+                        isa = 1;
+                        s.insert(0,1,'.');
+                        s.insert(0,1,a);
+                        issdot = 0;
+                        c = 'a';
+                        break;
+                    }                      
+            }            
+        }
+        if(s[0] != '/')
+            s.insert(0,1,'/');
+        return s;
+    }
+};
