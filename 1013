@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int numPairsDivisibleBy60(vector<int>& time) {
+        int n = time.size();
+        int k = 0;
+        for(int i = 0; i < n; i ++){
+            time[i] = time[i] % 60;
+        }
+        sort(time.begin(),time.end());
+        int i = 0, j = time.size() - 1;
+        int a = 0, b = 0;
+        int z = 0;
+        for(; i < j & time[i] < time[j];){
+            if(time[i] == 0){
+                i ++;
+                continue;
+            }
+            if(time[i] + time[j] == 60){
+                a = 1;
+                b = 1;
+                while(time[i] == time[i + 1]){
+                    a ++;
+                    i ++;
+                }
+                while(time[j] == time[j - 1]){
+                    j --;
+                    b ++;
+                }
+                k += a * b;
+                i ++;
+                j --;
+            }
+            else if(time[i] + time[j] < 60)
+                i ++;
+            else
+                j --;
+            
+        }
+        for(int m = 0; m < time.size(); m ++)
+            if(time[m] == 0)
+                z ++;
+        if(time[i] == time[j] & time[i] == 30)
+            k += (j - i) * (j - i + 1) / 2;
+        k += z * (z - 1) / 2;
+        return k;
+    }
+};
