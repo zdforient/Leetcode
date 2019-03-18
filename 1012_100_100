@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int bitwiseComplement(int N) {
+        int t = 2;
+        while(t <= N){
+            t = t* 2;
+        }
+        return t - N - 1;
+    }
+};
