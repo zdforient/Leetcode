@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int shipWithinDays(vector<int>& weights, int D) {
+        long long low = 0, high = 1e9;
+
+        while (low < high) {
+            long long mid = (low + high) / 2;
+            long long sum = 0;
+            int days = 1;
+            bool works = true;
+
+            for (int weight : weights)
+                if (weight > mid)
+                    works = false;
+                else if (sum + weight > mid) {
+                    days++;
+                    sum = weight;
+                } else {
+                    sum += weight;
+                }
+
+            if (works && days <= D)
+                high = mid;
+            else
+                low = mid + 1;
+        }
+
+        return low;
+    }
+};
