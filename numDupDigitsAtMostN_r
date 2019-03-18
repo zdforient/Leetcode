@@ -1,0 +1,35 @@
+string S;
+long long dp[20][1 << 10][2];
+
+class Solution {
+public:
+    long long solve(int index, int mask, bool match) {
+        if (index >= (int) S.size())
+            return 1;
+
+        long long &answer = dp[index][mask][match];
+
+        if (answer >= 0)
+            return answer;
+
+        answer = 0;
+
+        for (int digit = 0; digit < 10; digit++) {
+            if (match && digit > S[index] - '0')
+                break;
+
+            if (mask & 1 << digit)
+                continue;
+
+            answer += solve(index + 1, mask == 0 && digit == 0 ? 0 : (mask | 1 << digit), match && digit == S[index] - '0');
+        }
+
+        return answer;
+    }
+
+    int numDupDigitsAtMostN(int N) {
+        memset(dp, -1, sizeof(dp));
+        S = to_string(N);
+        return N - (solve(0, 0, true) - 1);
+    }
+};
