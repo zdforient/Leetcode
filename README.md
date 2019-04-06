@@ -1,12 +1,8 @@
 # Leetcode
+---------------------------------------------------------
+# Name Format:
 
-Leetcode execises
-
-Format:
-
-Questionnumber_Speed_Memory;
-
-'''''''''''
+(Question number)_(Speed rank)_(Memory cost rank)
 
 _c: need revision
 
