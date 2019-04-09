@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string removeOuterParentheses(string S) {
+        int leftnum = 0;
+        string output = "";
+        int rightnum = 0;
+        for (auto i:S){
+            if (i == '('){
+                leftnum ++;
+                if(leftnum != 1)
+                    output.push_back(i);
+            }
+            else{
+                if(leftnum != 1)
+                    output.push_back(i);
+                leftnum --;
+            }
+        }
+        
+        return output;
+    }
+};
