@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int videoStitching(vector<vector<int>>& clips, int T) {
+        int s = 0;
+        int bn = 0;
+        int num = 0;
+        int right = 0;
+        while(right < T){
+            for(auto i:clips){
+                if(i[0] <= right && i[1] > right && i[1] > bn){
+                    bn = i[1];
+                }
+            }
+            if(right == bn)
+                break;
+            right = bn;
+            num ++;
+        }
+        if (right>=T)
+            return num;
+        else
+            return -1;
+    }
+};
