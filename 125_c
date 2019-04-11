@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        string a = "";
+        int j = s.size() - 1;
+        int i = 0;
+        while (i < j) {
+            while (!isalnum(s[i]) && i < j)
+                i++;
+            while (!isalnum(s[j]) && j > i)
+                j--;
+            if (i < j) {
+                if (s[i] == s[j] || (isalpha(s[i]) && isalpha(s[j]) && abs(s[i] - s[j]) == 32)) {
+                    i++;
+                    j--;
+                    continue;
+                }
+                else{
+
+                    return false;
+                }
+
+            }
+        }
+        return true;
+    }
+        
+};
