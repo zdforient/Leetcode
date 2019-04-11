@@ -1,0 +1,56 @@
+class MinStack {
+public:
+	/** initialize your data structure here. */
+	MinStack() {
+	}
+	int val;
+	MinStack *th = NULL;
+	MinStack *next = NULL;
+	void push(int x) {
+		MinStack* n = new MinStack();
+		n->val = x;
+		if(th == NULL)
+            th = n;
+        else{
+            n->next = th;
+            th = n;
+        }
+            
+	}
+
+	void pop() {
+		if(th != NULL)
+            th = th->next;
+            
+	}
+
+	int top() {
+		if(th != NULL)
+            return th->val;
+        else
+            return -1;
+	}
+
+	int getMin() {
+		if (th == NULL) {
+			cout << "no num exist";
+			return -1;
+		}
+		int s = th->val;
+        MinStack* t = th;
+		while (t->next != NULL){
+			s = min(s, t->next->val);
+			t = t->next;
+		}
+		return s;
+	}
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
