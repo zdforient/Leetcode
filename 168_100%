@@ -1,0 +1,14 @@
+class Solution {
+public:
+    string convertToTitle(int n) {
+        int st = 65;
+        string s = "";
+        int ch,yu;
+        while(n > 0){
+            yu = (n-1) % 26;
+            s = char(yu+65) + s;
+            n = int((n-1) / 26);
+        }
+        return s;
+    }
+};
