@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        long long test = 5;
+        int out = 0;
+        while (int(n/test)) {
+            out += int(n / test);
+            test *= 5;
+        }
+        return out;
+    }
+};
