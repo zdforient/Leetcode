@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int titleToNumber(string s) {
+        int out = 0;
+        for (auto i : s) {
+            out *= 26;
+            out += int(i) - 65 + 1;
+        }
+        return out;
+    }
+};
