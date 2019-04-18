@@ -1,0 +1,18 @@
+class Solution {
+public:
+	int sumleaves(TreeNode *root, bool isleft, int &sum) {
+		if (root == NULL)
+			return 0;
+		if (root->left != NULL)
+			sumleaves(root->left, true, sum);
+		if (root->right != NULL)
+			sumleaves(root->right, false, sum);
+		if (isleft && root->left == NULL && root->right == NULL)
+			sum += root->val;
+		return sum;
+	}
+	int sumOfLeftLeaves(TreeNode* root) {
+		int sum = 0;
+		return sumleaves(root, false, sum);
+	}
+};
