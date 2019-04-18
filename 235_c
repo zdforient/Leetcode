@@ -1,0 +1,25 @@
+class Solution {
+public:
+	int find(TreeNode* root, TreeNode* p, TreeNode* q, TreeNode* &result) {
+		if (root == NULL)
+			return 0;
+		int a = find(root->left, p, q, result);
+		int b = find(root->right, p, q, result);
+		if (result != NULL)
+			return 1;
+		int c = (root->val == p->val) + (root->val == q->val);
+		if (a + b + c == 2) {
+			result = root;
+            result->val = root->val;
+			return 1;
+		}
+		else
+			return a + b + c;
+        
+	}
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+		TreeNode* output = NULL;
+		find(root, p, q, output);
+		return output;
+    }
+};
