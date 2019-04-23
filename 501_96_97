@@ -1,0 +1,55 @@
+/**
+* Definition for a binary tree node.
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+	void findM(TreeNode * root, vector<int> & output, int &frequent, int &parent, int &thisfrequency) {
+		if (root != NULL) {
+            if(root->left == NULL)
+                if(frequent == 0){
+                    frequent = 1;
+                    parent = root->val;
+                }
+			findM(root->left, output, frequent, parent, thisfrequency);
+            if (root->val > parent) {
+                if (thisfrequency > frequent) {
+                    output.clear();
+                    output.push_back(parent);
+                    frequent = thisfrequency;
+                }
+                else if(thisfrequency == frequent){
+                    output.push_back(parent);
+                }
+                thisfrequency = 1;
+                parent = root->val;
+            }
+            else {
+                thisfrequency++;
+            }
+            findM(root->right, output, frequent, parent, thisfrequency);
+        }
+	}
+
+	vector<int> findMode(TreeNode* root) {
+		vector<int> output;
+		int frequent = 0;
+		if (root == NULL)
+			return output;
+		int thisfrequency = 0;
+        int parent;
+		findM(root, output, frequent, parent, thisfrequency);
+        if(thisfrequency > frequent){
+            output.clear();
+            output.push_back(parent);
+        }
+        else if(thisfrequency == frequent)
+            output.push_back(parent);
+        return output;
+	}
+};
