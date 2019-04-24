@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int deepfirst(Node* root, int depth, int &maxdepth){
+        if(root == NULL){
+            maxdepth = max(maxdepth, depth);
+            return 0;
+        }
+        if(root->children.size() == 0){
+            depth ++;
+            maxdepth = max(maxdepth, depth);
+            return 1;
+        }
+        else{
+            for(auto i : root->children){
+                deepfirst(i, depth + 1, maxdepth);
+            }
+        }
+        return 1;
+    }
+    int maxDepth(Node* root) {
+        int depth = 0, maxdepth = 0;
+        deepfirst(root, depth, maxdepth);
+        return maxdepth;
+    }
+};
+
+
+class Solution {
+public:
+    int maxDepth(Node* root) {
+    if (!root) return 0;
+    int res = 1;
+    for(Node* child : root->children) 
+        res = max(res, maxDepth(child) + 1);
+    return res;
+    }
+};
