@@ -1,0 +1,34 @@
+/**
+* Definition for a binary tree node.
+* struct TreeNode {
+*     int val;
+*     TreeNode *left;
+*     TreeNode *right;
+*     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+* };
+*/
+class Solution {
+public:
+	long long findsub(TreeNode *root, int &sum) {
+		if (root == NULL)
+			return 0;
+		if (root->left == NULL && root->right == NULL)
+			return root->val;
+		int a = findsub(root->left, sum);
+		int b = findsub(root->right, sum);
+		sum += abs(a - b);
+		return  a + b + root->val;
+	}
+
+	int findTilt(TreeNode* root) {
+		if (!root)
+			return 0;
+		if (root->left == NULL && root->right == NULL)
+			return 0;
+		int sum = 0;
+		findsub(root, sum);
+		return sum;
+	}
+};
+
+
