@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int firstnum = 0, secondnum = 0, mid = 0;
+        for(int i = 0; i < nums.size(); i ++){
+            mid = secondnum;
+            secondnum = firstnum + nums[i];
+            firstnum = max(mid, firstnum);
+        }
+        return max(firstnum, secondnum);
+    }
+};
