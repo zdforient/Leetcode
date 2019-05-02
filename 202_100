@@ -1,0 +1,19 @@
+class Solution {
+public:
+	bool isHappy(int n) {
+		vector<int> nums{ n };
+		string s;
+		int sum;
+		while(n != 1){
+			s = to_string(n);
+			n = 0;
+			for (auto i : s)
+				n += (i - '0') * (i - '0');
+			nums.push_back(n);
+			for (int i = nums.size() - 1, j = 0; j < nums.size() - 1; j++)
+				if (nums[j] == nums[i])
+					return false;
+		}
+		return true;
+	}
+};
