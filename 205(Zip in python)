@@ -1,0 +1,15 @@
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        Dict = {}
+        for i in range(len(s)):
+            if s[i] in Dict:
+                if t[i] != Dict[s[i]]:
+                    return False
+            elif i > 0 and t[i] in t[:i]:
+                return False
+            else:
+                Dict[s[i]] = t[i]
+        return True
+                
+                
+return len(set(zip(s,t)))==len(set(s))==len(set(t))
