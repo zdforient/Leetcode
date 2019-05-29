@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        map<int,int> m1, m2;
+        vector<int> output;
+        int num,j;
+        for(auto i:nums1){
+            if (m1.find(i) != m1.end())
+                m1.at(i) = m1.at(i) + 1;
+            else
+                m1.insert(pair<int,int>(i,1));
+        }
+        for(auto i:nums2){
+            if (m2.find(i) != m2.end())
+                m2.at(i) = m2.at(i) + 1;
+            else
+                m2.insert(pair<int,int>(i,1));
+        }
+        for(auto i = m1.begin(); i != m1.end(); i++){
+            j = i->first;
+            num = i->second;
+            if(m2.find(j) != m2.end()){
+                num = min(num, m2.at(j));
+                output.insert(output.begin(), num, j);
+            }
+        }
+        return output;
+    }
+};
