@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {
+        string s[26] = {""};
+        int j = 0;
+        string k;
+        for(auto i:pattern){
+            k = "";
+            if(j == str.size())
+                return false;
+            while(str[j] != ' ' && j <= str.size() - 1){
+                k += str[j++];
+                if (j == str.size())
+                    break;
+            }
+            j++;
+            if(s[i-'a'] == "")
+                s[i-'a'] = k;
+            else if (s[i-'a'] != k)
+                return false;        
+        }
+        if(j != str.size() + 1)
+            return false;
+        for(int i = 0; i < 25; i ++)
+            for(int j = i + 1; j < 26; j ++)
+                if(s[i] == s[j] && s[i] != "")
+                    return false;
+        return true;
+    }
+};
