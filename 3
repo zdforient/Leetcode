@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char,int> mp;
+        int low = 0, maxlength = 0;
+        char temp;
+        for(int i = 0; i < s.length(); i++){
+            temp = s[i];
+            if(mp.count(temp))
+                low = max(mp[temp] + 1, low);
+            mp[temp] = i;
+            maxlength = max(maxlength, i - low + 1);
+        }
+        return maxlength;
+    }
+};
+
+
+class Solution {
+public:
+int lengthOfLongestSubstring(string s) {
+        vector<int> dict(256, -1);
+        int maxLen = 0, start = -1;
+        for (int i = 0; i != s.length(); i++) {
+            if (dict[s[i]] > start)
+                start = dict[s[i]];
+            dict[s[i]] = i;
+            maxLen = max(maxLen, i - start);
+        }
+        return maxLen;
+    }
+};
