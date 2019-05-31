@@ -1,0 +1,34 @@
+class Solution {
+public:
+    void checklength(string s, signed int &a, signed int &b, signed int i, signed int j){
+        while(i >= 0 && j < s.length()){
+            if(s[i] != s[j])
+                break;
+            i --;
+            j ++;
+        }
+        i++;
+        j--;
+        if(j - i > b - a){
+            a = i;
+            b = j;
+        }
+    }
+    string longestPalindrome(string s) {
+        signed int len = s.length(),a = 0, b = 0;
+        if(len < 2)
+            return s;
+        char pre = s[0], cur = s[0];
+        for(signed int i = 1; i < len; i++){
+            if(pre == s[i])
+                checklength(s,a,b,max(i - 2,0), i);
+            if(cur == s[i])
+                checklength(s,a,b,i - 1, i);
+            pre = cur;
+            cur = s[i];
+            if(b - a > 2*(len - i))
+                break;
+        }
+        return s.substr(a,b-a + 1);
+    }
+};
