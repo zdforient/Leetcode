@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool isnum(char a){
+        if(a >= '0' && a <= '9')
+            return true;
+        return false;
+    }
+    
+    int myAtoi(string str) {
+        if(str.length() < 1)
+            return 0;
+        while(str.length() != 0 && str[0] == ' ')
+            str.erase(str.begin());
+        if(str[0] != '-' && str[0] != '+' && !isnum(str[0]))
+            return 0;
+        long long out = 0;
+        int sign = 1;
+        if(str[0] == '-')
+            sign = -1;
+        int i = isnum(str[0]) ? 0:1;
+        while(str[i] == '0' && str.length() != i + 1)
+            str.erase(str.begin() + i);        
+        int maxlen = 12;
+        for(i;i<str.length() && i < maxlen;i++){
+            if(!isnum(str[i]))
+                break;
+            out = out*10 + str[i] - '0';
+        }
+        out *= sign;
+        if (out <= -2147483648)
+            out = -2147483648;
+       if (out > 2147483647)
+           out = 2147483647;
+        return (int) out;
+    }
+};
