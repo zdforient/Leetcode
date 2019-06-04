@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        vector<pair<int,int>> left, right;
+        left.push_back(make_pair(0,height[0]));
+        right.push_back(make_pair(height.size() - 1, height.back()));
+        int maxarea = 0;
+        for(int i = 1, j = height.size() - 2; i < j; ){
+            if(height[i] > left.back().second)
+                left.push_back(make_pair(i,height[i]));
+            if(height[j] > right.back().second)
+                right.push_back(make_pair(j, height[j]));
+            if(left.back().second > right.back().second)
+                j--;
+            else
+                i++;
+        }
+        for(auto i:left)
+            for(auto j:right)
+                maxarea = max(maxarea, (j.first - i.first) * min(i.second, j.second));
+        return maxarea;
+    }
+};
