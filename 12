@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string intToRoman(int num) {
+        int loc = 1, tnum = 0, tomap = 0;
+        unordered_map<int, char> rom{{1,'I'}, {5,'V'}, {10, 'X'}, {50,'L'}, {100,'C'}, {500,'D'}, {1000,'M'}};
+        string snum = to_string(num), output = "";
+        for(int i = snum.length() - 1; i >= 0; loc *= 10, i--){
+            tnum = (snum[i] - '0');
+            tomap = tnum * loc;
+            if(tnum < 4)
+                output.insert(output.begin(), tnum, rom.at(loc));
+            else if(tnum == 4 || tnum == 9){
+                output.insert(output.begin(), rom.at(tomap + loc));
+                output.insert(output.begin(), rom.at(loc));                    
+            }
+            else if(tnum < 9){
+                output.insert(output.begin(), tnum - 5, rom.at(loc));
+                output.insert(output.begin(), rom.at(5 * loc));
+            }
+        }
+        return output;
+    }
+};
