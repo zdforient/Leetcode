@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> output;
+        if(nums.size() < 4)
+            return output;
+        sort(nums.begin(), nums.end());
+        int pa, pb, pc, pd = target - 1, ppb = nums.back() + 1, ppa = nums.back() + 1;
+        for(int i = 0; i != nums.size() - 3; i ++){
+            if(nums[i] == ppa)
+                continue;
+            int a = nums[i];
+            ppa = a;
+            ppb = nums.back() + 1;
+            for(int j = i + 1; j != nums.size() - 2; j ++){
+                if(nums[j] == ppb)
+                    continue;
+                int b = nums[j];
+                ppb = b;
+                int mins = target - a - b;
+                for(int k = j + 1, m = nums.size() - 1; k < m;){
+                    int c = nums[k];
+                    int d = nums[m];
+                    if(c + d == mins){
+                        if(pd != target - 1){
+                            if(pa != a || pb != b || pc != c || pd != d){
+                                output.push_back(vector<int>{a,b,c,d});
+                                pa = a; pb = b; pc = c; pd = d;
+                            }
+                        }
+                        else{
+                            output.push_back(vector<int>{a,b,c,d});
+                            pa = a; pb = b; pc = c; pd = d;
+                        }
+                        k++;
+                        m--;
+                    }
+                    else if(c + d < mins)
+                        k ++;
+                    else
+                        m --;
+                    
+                }
+            }
+        }
+        return output;
+    }
+};
