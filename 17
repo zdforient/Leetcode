@@ -1,0 +1,53 @@
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        map<char,string> sm;
+        for(int i = 0, k = 0; i < 8; i++){
+            string s;
+            for(int j = 0; j < 3; j++)
+                s += 'a'+i*3+j+k;
+            if(i == 7)
+                s += 'z';
+            else if(i == 5){
+                s += 's';
+                k = 1;
+            }
+            sm.insert(pair<char, string>('2' + i, s));
+        }
+        vector<string> output;
+        if(digits.length() == 0)
+            return output;
+        vector<int> a(digits.length(), 0);
+        int ent = 0;
+        string s0;
+        for(int k = 0; k != digits.length(); k++ ){
+            s0 += sm[digits[k]][a[k]];
+        }
+        output.push_back(s0);
+        while(1){
+            ent = 1;
+            string s;
+            for(char j = digits.length() - 1; j != -1; j --){
+                char i = digits[j];
+                a[j] += ent;
+                if(sm[i].length() == a[j]){
+                    a[j] = 0;
+                    ent = 1;
+                }
+                else{
+                    ent = 0;
+                    break;
+                }
+            }            
+            if(ent)
+                break;
+            else{
+                for(int k = 0; k != digits.length(); k++ ){
+                    s += sm[digits[k]][a[k]];
+                }
+                    output.push_back(s);
+                }
+        }     
+        return output;
+    }
+};
