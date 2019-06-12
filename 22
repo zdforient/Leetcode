@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void generatep(vector<string> &output, int leftn, int rightn, string i){
+        if(leftn != 0)
+            generatep(output, leftn - 1, rightn + 1, i + "(");
+        if(rightn != 0)
+            generatep(output, leftn, rightn - 1, i + ")");
+        else if(leftn == 0)
+            output.push_back(i);
+    }
+    
+    vector<string> generateParenthesis(int n) {
+        vector<string> output;
+        string i = "(";
+        generatep(output, n - 1, 1, i);
+        return output;
+    }
+};
