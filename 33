@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        if(nums.size() < 1)
+            return -1;
+        if(nums.size() < 4){
+            for(int i = 0; i < nums.size(); i ++)
+                if (nums[i] == target)
+                    return i;
+            return -1;
+        }
+        if(nums[0] == target)
+            return 0;
+        if(nums.back() == target)
+            return nums.size() - 1;
+        int low,high,mid;
+        int l = nums[0], r = nums.back();
+        if(l<r){
+            for(low = 0, high = nums.size() - 1, mid = high / 2; low < high - 1; mid = (low+high) / 2){
+                if(nums[mid] > target)
+                    high = mid;
+                else if(nums[mid] < target)
+                    low = mid;
+                else 
+                    return mid;
+            }
+        }
+        else{
+            if(target > r){
+                for(low = 0, high = nums.size() - 1, mid = high / 2; low < high - 1; mid = (low+high) / 2){
+                    if(nums[mid] > target)
+                        high = mid;
+                    else if(nums[mid] < target && nums[mid] > r)
+                        low = mid;
+                    else if(nums[mid] < target)
+                        high = mid;
+                    else 
+                        return mid;
+                }
+            }
+            else{
+                for(low = 0, high = nums.size() - 1, mid = high / 2; low < high - 1; mid = (low+high) / 2){
+                    if(nums[mid] < target)
+                        low = mid;
+                    else if(nums[mid] > target && nums[mid] < l)
+                        high = mid;
+                    else if(nums[mid] > target)
+                        low = mid;
+                    else 
+                        return mid;
+                }
+            }
+        }
+        if(nums[low] == target)
+            return low;
+        if(nums[high] == target)
+            return high;
+        
+        return -1;
+    }
+};
