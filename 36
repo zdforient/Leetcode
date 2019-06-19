@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int ns[9] = {1,2,3,4,5,6,7,8,9};
+        for(int i = 0; i < board.size(); i ++){
+             set<int> setn(ns,ns+9);
+            for(int j = 0; j < board[i].size(); j ++){
+                if(board[i][j] != '.')
+                    if(setn.find(board[i][j] - '0') != setn.end())
+                        setn.erase(board[i][j] - '0');
+                    else return false;                        
+            }
+        }
+        for(int i = 0; i < 9; i ++){
+            set<int> setn(ns,ns+9);
+            for(int j = 0; j < 9; j ++){
+                if(board[j][i] != '.')
+                    if(setn.find(board[j][i] - '0') != setn.end())
+                        setn.erase(board[j][i] - '0');
+                    else 
+                        return false;                         
+            }
+        }
+        for(int i = 0; i < 3; i ++){
+            for(int j = 0; j < 3; j ++){
+                set<int> setn(ns,ns+9);
+                for(int m = i*3; m < i*3 + 3; m++){
+                    for(int n = j*3; n < j*3+3; n++){
+                    if(board[m][n] != '.')
+                        if(setn.find(board[m][n] - '0') != setn.end())
+                            setn.erase(board[m][n] - '0');
+                        else return false;  
+                    }
+                }
+            }
+        }
+       return true;
+    }
+};
