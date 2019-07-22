@@ -1,0 +1,37 @@
+class Solution {
+public:
+    void combinehelper(vector<int>&candidates, vector<int> cur, vector<vector<int>> &output, int target, int j){
+        if(!target){
+            output.push_back(cur);
+            return;
+        }
+        else{
+            for(int i = j; i < candidates.size() && candidates[i] <= target && target >= 0; i ++){
+                if(i < candidates.size() - 1 && candidates[i] == candidates[i + 1]){
+                    int k;
+                    for(k = i; k < candidates.size() && candidates[k] == candidates[i]; k++){}
+                    combinehelper(candidates, cur, output, target, k);
+                    while(i < k){
+                        cur.push_back(candidates[i]);
+                        target -= candidates[i++];
+                        combinehelper(candidates, cur, output, target, k);
+                    }
+                    return;
+                }
+                else{
+                    cur.push_back(candidates[i]);
+                    combinehelper(candidates, cur, output, target - candidates[i], i + 1);
+                    cur.pop_back();
+                }
+            }
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<int> cur;
+        vector<vector<int>> output;
+        combinehelper(candidates, cur, output, target, 0);
+        return output;
+    }
+};
+
