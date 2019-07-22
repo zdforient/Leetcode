@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void combine(vector<int> candidates, int target, vector<vector<int>> &output, vector<int> output0, int j){
+        for(int i = j; i < candidates.size() && candidates[i] <= target; i ++){
+            output0.push_back(candidates[i]);
+            if(candidates[i] < target) combine(candidates, target - candidates[i], output, output0, i);
+            else if(candidates[i] == target) output.push_back(output0);
+            output0.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> output;
+        vector<int> output0;
+        combine(candidates, target, output, output0, 0);
+        return output;
+    }
+};
