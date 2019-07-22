@@ -35,3 +35,30 @@ public:
     }
 };
 
+
+class Solution {
+public:
+    void combinehelper(vector<int>&candidates, vector<int> cur, vector<vector<int>> &output, int target, int j){
+        if(!target){
+            output.push_back(cur);
+            return;
+        }
+        else{
+            for(int i = j; i < candidates.size() && candidates[i] <= target && target >= 0; i ++){
+                cur.push_back(candidates[i]);
+                combinehelper(candidates, cur, output, target-candidates[i], i + 1);
+                cur.pop_back();
+                while(i + 1 < candidates.size() && candidates[i] == candidates[i + 1])
+                    i++;
+            }
+                
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<int> cur;
+        vector<vector<int>> output;
+        combinehelper(candidates, cur, output, target, 0);
+        return output;
+    }
+};
