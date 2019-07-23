@@ -1,0 +1,22 @@
+class Solution {
+public:
+	string multiply(string num1, string num2) {
+		int len = num1.length() + num2.length();
+		string output;
+		int jin = 0, cur = 0;
+
+		for (int i = 0; i < len; i++) {
+			jin /= 10;
+			for (int j = 0; j < num1.length(); j++) {
+				int k = i - j;
+				if (k < num2.length())
+					jin += (num1[num1.length() - j - 1] - '0') * (num2[num2.length() - k - 1] - '0');
+			}
+			char ins = jin % 10 + '0';
+			output.insert(output.begin(), ins);
+		}
+		while (output[0] == '0' && output.length() > 1)
+			output.erase(output.begin());
+		return output;
+	}
+};
