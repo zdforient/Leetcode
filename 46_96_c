@@ -1,0 +1,19 @@
+class Solution {
+public:
+    void permutehelper(vector<vector<int>> &output, int cur, vector<int> nums){
+        if(cur == nums.size()){
+            output.push_back(nums);
+            return;
+        }
+        for(int i = cur; i < nums.size(); i ++){
+            swap(nums[i], nums[cur]);
+            permutehelper(output, cur + 1, nums);
+            swap(nums[i], nums[cur]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> output;
+        permutehelper(output, 0, nums);
+        return output;
+    }
+};
