@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<string> existstrings;
+        vector<vector<string>> output;
+        string s;
+        int loc;
+        for(int i = 0; i < strs.size(); i ++){
+            s = strs[i];
+            sort(s.begin(), s.end());
+            bool find = false;
+            for(int j = 0; j < existstrings.size(); j ++){
+                if(existstrings[j] == s){
+                    find = true;
+                    loc = j;
+                    break;
+                }
+            }
+            if(find)
+                output[loc].push_back(strs[i]);
+            else{
+                output.push_back(vector<string> {strs[i]});
+                existstrings.push_back(s);
+            }
+        }
+        return output;
+    }
+};
+
+
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> map;
+        vector<vector<string>> result;
+        for(const auto& str : strs){
+            string s = str;
+            sort(begin(s), end(s));
+            map[s].push_back(str);
+        }
+        for(auto& kv : map)
+            result.push_back(kv.second);
+        return result;
+    }
+};
