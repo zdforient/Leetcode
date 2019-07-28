@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> output;
+        if(matrix.size() < 1)
+            return output;
+        else if(matrix[0].size() < 1)
+            return output;
+        else if(matrix.size() == 1)
+            return matrix[0];
+        else if(matrix[0].size() == 1){
+            for(auto i:matrix)
+                output.push_back(i[0]);
+            return output;
+        }
+        int N = matrix.size(), M = matrix[0].size();
+        for(int i = 0; i*2 < M && i*2 < N; i ++){
+            for(int j = i; j + i < M - 1; j ++)
+                output.push_back(matrix[i][j]);
+            for(int j = i; j + i < N - 1; j ++)
+                output.push_back(matrix[j][M - 1 - i]);
+            for(int j = i; j + i < M - 1; j ++)
+                output.push_back(matrix[N - 1 - i][M - 1 - j]);
+            for(int j = i; j + i < N - 1; j ++)
+                output.push_back(matrix[N - 1 - j][i]);
+        }
+        if(M % 2 == 1 && M == N){
+            int i = M / 2;
+            output.push_back(matrix[i][M / 2]);
+        }
+        if(M %2 == 1 && M != N && N % 2 == 1)
+            output.pop_back();
+        return output;
+    }
+};
+
+
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        return matrix and [*matrix.pop(0)] + self.spiralOrder([*zip(*matrix)][::-1])
