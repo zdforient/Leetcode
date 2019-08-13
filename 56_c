@@ -28,7 +28,7 @@ public:
         return res;
     }
 };
-
+In this solution, the author uses map to automatically order the numbers in the vector.
 
 class Solution {
 public:
