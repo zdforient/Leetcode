@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string getPermutation(int n, int k) {
+        string output = "";
+        int m = 1;
+        string temp = "";
+        for(int i = 1; i < n + 1; i++){
+            m *= i;
+            temp += '0' + i;
+        }
+        int left;
+        for(int i = 1;  i < n + 1; i ++){
+            m /= n - i + 1;
+            left = (-1+k) / m;
+            k -= left * m;
+            //cout<<left<<"$";
+            output += temp[left];
+            temp.erase(temp.begin() + left);
+        }
+        return output;
+    }
+};
+
