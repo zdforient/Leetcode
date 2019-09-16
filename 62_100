@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        //return (m+n-2)!/(m-1)!/(n-1)!
+        if(m < n){
+            int c = m;
+            m = n;
+            n  = c;
+        }
+        if(m < 2 || n < 2)
+            return 1;
+        long double mnf = 1;
+        for(int i = m+n-2; i != m-1; i --){
+            mnf *= i;
+        }
+        for(int i = n-1; i != 1; i --)
+            mnf /= i;
+        return (int)mnf;
+    }
+};
