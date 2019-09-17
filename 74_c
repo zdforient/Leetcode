@@ -1,0 +1,57 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        if(matrix.size() < 1)
+            return false;
+        if(matrix[0].size() < 1)
+            return false;
+        int m = matrix.size(), n = matrix[0].size();
+        int i = 0,j = m -1, k;
+        while(i < j - 1){
+            k = (i + j) / 2;
+            if(matrix[k][0] < target)
+                i  = k;
+            else if(matrix[k][0] == target)
+                return true;
+            else
+                j = k;
+        }
+        if(matrix[j][0] == target)
+            return true;
+        int row = matrix[j][0] < target? j:i;
+        i = 0;
+        j = n - 1;
+        while(i < j - 1){
+            k = (i + j) / 2;
+            if(matrix[row][k] < target)
+                i = k;
+            else if(matrix[row][k] == target)
+                return true;
+            else
+                j = k;
+        }
+        if(matrix[row][i] == target || matrix[row][j] == target)
+            return true;
+        else
+            return false;
+    }
+};
+
+
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int> > &matrix, int target) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        int l = 0, r = m * n - 1;
+        while (l != r){
+            int mid = (l + r - 1) >> 1;
+            if (matrix[mid / m][mid % m] < target)
+                l = mid + 1;
+            else 
+                r = mid;
+        }
+        return matrix[r / m][r % m] == target;
+    }
+};
