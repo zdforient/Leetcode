@@ -1,0 +1,36 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int frt1 = -1, frt2 = -1;
+        for(int i = 0; i < nums.size(); i ++){
+            switch(nums[i]){
+                case 0:
+                    if(frt1 >= 0){
+                        swap(nums[frt1], nums[i]);
+                        frt1 ++;
+                    }
+                    if(frt2 >= 0){
+                        swap(nums[frt2], nums[i]);
+                        frt2 ++;
+                    }
+                    break;
+                case 1:
+                    if(frt2 >= 0){
+                        swap(nums[frt2], nums[i]);
+                        frt2 ++;
+                        if(frt1 < 0)
+                            frt1 = frt2 - 1;
+                        break;
+                    }
+                    if(frt1 < 0)
+                        frt1 = i;
+                    break;
+                case 2:
+                    if(frt2 < 0)
+                        frt2 = i;
+                    break;
+            }
+        }
+        
+    }
+};
