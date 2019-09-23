@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        //C(m + n - 2, m - 1) - C(i + j, i) * C(m - i + n - j - 2, m - i - 1);
+        int m = obstacleGrid.size();
+        if(!m)
+            return 0;
+        int n = obstacleGrid[0].size();
+        if(!n)
+            return 0;
+        vector<vector<long long>> output(m+1, vector<long long> (n + 1, 0));
+        output[0][1] = 1;
+        for(int i = 1; i < m + 1; i ++){
+            for(int j = 1; j < n + 1; j ++){
+                if(!obstacleGrid[i-1][j-1])
+                    output[i][j] = output[i - 1][j] + output[i][j-1];
+            }
+        }
+        return output[m][n];
+            
+    }
+};
