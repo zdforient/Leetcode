@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        vector<int> output;
+        int temp = 0;
+        helper(output, n-1, temp);
+        return output;
+    }
+private:
+    void helper(vector<int> &output, int n, int &temp){
+        if(n == -1){
+            output.push_back(temp);
+            return;
+        }
+        int a = 1 << n;
+        helper(output, n - 1, temp);
+        temp = temp ^ a;
+        helper(output, n - 1, temp);
+    }
+};
