@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.size() < 3)
+            return nums.size();
+        int a = nums[0];
+        int t = 1;
+        int n;
+        for(int i = 1; i < nums.size(); i ++){
+            n = nums[i];
+            if(n == a){
+                if(t == 1)
+                    t++;
+                else
+                    nums.erase(nums.begin() + i--);
+            }
+            else{
+                a = nums[i];
+                t = 1;
+            }
+        }
+        return nums.size();
+    }
+};
