@@ -1,0 +1,57 @@
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        if(intervals.size() == 0){
+            intervals.push_back(newInterval);
+            return intervals;
+        }
+        int pi = min(newInterval[0],intervals[0][0]) - 1;
+        int start = pi,end = pi;
+        int a = newInterval[0], b = newInterval[1];
+        for(int i = 0; i < intervals.size(); i ++){
+            int l = intervals[i][0], r = intervals[i][1];
+            if( r < a)
+                continue;
+            else if(l > b){
+                if(start >= pi){
+                    if(start == pi)
+                        intervals.insert(intervals.begin() + i, vector<int>{a,b});
+                    else
+                        intervals.insert(intervals.begin() + i, vector<int>{start,end});
+                    start = pi-1;
+                }
+                break;
+            } 
+            else if(l >= a && r >= b){
+                if(start == pi)
+                    start = a;
+                end = r;
+                intervals.erase(intervals.begin() + i--);
+            }
+            else if(l <= a && r >= b){
+                start = pi - 1;
+                break;
+            }
+            else if(l <= a && r <= b){
+                end = b;
+                if(start == pi)
+                    start = l;
+                intervals.erase(intervals.begin() + i--);
+            }
+            else if(l >= a && r <= b){
+                if(start == pi)
+                    start = a;
+                if(end == pi)
+                    end = b;
+                intervals.erase(intervals.begin() + i--);
+            }
+        }
+        if(start > pi)
+            intervals.push_back(vector<int>{start,end});
+        else if(start == pi)
+            intervals.push_back(vector<int>{a,b});
+        return intervals;
+    }
+};
+
+
