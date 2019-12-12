@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int numDecodings(string s) {
+        int a = 1, b = 1;
+        int ans = 0,temp;
+        if(s.length() < 1)
+            return 0;
+        if(s.length() == 1)
+            return isvalid(s[0]);
+        if(s[0] == '0')
+            return 0;
+        for(int i = 1; i < s.length(); i ++){
+            temp = a;
+            if(isvalid(s[i-1],s[i]) && isvalid(s[i])){
+                ans = a + b;
+            }
+            else if(isvalid(s[i-1],s[i]))
+                ans = b;
+            else if(isvalid(s[i]))
+                ans = a;
+            else
+                return 0;
+            a = ans;
+            b = temp;
+        }
+        return ans;
+    }
+    bool isvalid(char a, char b){
+        if(a != '0' && 10*(a-'0') + b - '0' <= 26 )
+            return true;
+        else return false;
+    }
+    bool isvalid(char a){
+        return a != '0';
+    }
+};
