@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int mood(long long int a, long long int b){
+        long long int output = 1;
+        for(int i = 0; i < b; i ++){
+            output *= a;
+            output = output % 1337;
+        }
+        return output;
+    }
+    int superPow(int a, vector<int>& b) {
+        long long int output = 1;
+        int lefti = 0, left10 = a;
+        vector<int> outputv;
+        for(int i = b.size() - 1; i >= 0; i --){
+            lefti = mood(left10, b[i]);
+            left10 = mood(left10,10);
+            outputv.push_back(lefti);
+        }
+        for(auto i : outputv)
+        {
+            output *= i;
+            output = output % 1337;
+        }
+        return output;
+    }
+};
