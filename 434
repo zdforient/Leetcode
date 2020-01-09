@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countSegments(string s) {
+        int output = 0;
+        int sn = 1;
+        for(int i = 0; i < s.length(); i ++){
+            if(s[i] == ' '){
+                if(sn)
+                    continue;
+                else{
+                    sn = 1;
+                    output++;
+                }
+            }
+            else
+                sn = 0;
+        }
+        output += 1-sn;
+        return output;
+    }
+};
