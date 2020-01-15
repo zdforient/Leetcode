@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void helper(vector<int> &nums, int S, int j, int &output){
+        int sum = accumulate(nums.begin(),nums.end(),0);
+        for(int i = j; i < nums.size(); i ++){
+            if(sum - nums[i] * 2 == S){
+                output ++;
+            }
+            nums[i] = -nums[i];
+            helper(nums, S, i+1, output);
+            nums[i] = -nums[i];
+        }
+    }
+    
+    
+    int findTargetSumWays(vector<int>& nums, int S) {
+        int output = 0;
+        if(nums.size() < 1)
+            return output;
+        int sum = accumulate(nums.begin(),nums.end(),0);
+        if(sum == S)
+            output += 1;
+        helper(nums, S, 0, output);
+        return output;
+    }
+};
