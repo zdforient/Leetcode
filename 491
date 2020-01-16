@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<vector<int>> output;
+        vector<int> temp;
+        dfs(output, temp, nums,0);
+        return output;
+    }
+    void dfs(vector<vector<int>> &output, vector<int> temp, vector<int> nums, int i0){
+        if(temp.size() > 1)
+            output.push_back(temp);
+        unordered_set<int> data;
+        for(int i = i0; i < nums.size(); i++){
+            if((!temp.size() || nums[i] >= temp.back()) && data.find(nums[i]) == data.end()){
+                temp.push_back(nums[i]);
+                dfs(output,temp, nums, i+1);
+                temp.pop_back();
+                data.insert(nums[i]);
+            }
+        }
+    }
+};
