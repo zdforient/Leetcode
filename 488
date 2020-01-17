@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int findMinStep(string board, string hand) {
+        int output = 100;
+        dfs(board, hand, 0, output,0);
+        if(output == 100)
+            output = -1;
+        return output;
+    }
+    void run_zuma(string &board, int i){
+        if(i > board.length() - 3)
+            return;
+        char c = board[i];
+        if(c == board[i+1] && c == board[i + 2]){
+            //cout<<i<<endl;
+            while(i < board.length() && board[i] == c)
+                board.erase(board.begin() + i);
+            //cout<<board.length()<<1000+i<<endl;
+            if(i == board.length() || i == 0)
+                return;
+            c = board[i];
+            while(i>=0 && board[i] == c)
+                i--;
+            run_zuma(board,i+1);
+        }
+    }
+    
+    void dfs(string board, string hand, int i0, int &output, int k){
+        if(board.length() == 0){
+            if(k < output)
+                output = k;
+            return;
+        }
+        if(i0 == hand.length() && output > 10){
+            return;
+        }
+        if(output <= k)
+            return;
+        char c = hand[i0], pre = ' ';
+        string temp = board;
+        for(int j = 0; j < board.length(); j++){
+            if(board[j] == c && pre != c){
+                board.insert(board.begin() + j, c);
+                //cout<<board<<endl;
+                run_zuma(board, j);
+                //cout<<output<<endl;
+                dfs(board, hand, i0 + 1, output, k+1);
+                //cout<<output<<endl;
+                board = temp;
+            }
+            pre = board[j];
+        }
+        if(i0 + 1 < hand.length())
+            dfs(board, hand, i0 + 1, output, k);
+    }
+};
