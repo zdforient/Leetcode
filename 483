@@ -1,0 +1,19 @@
+class Solution {
+public:
+    typedef unsigned long long ull;
+    string smallestGoodBase(string n) {
+        unsigned long long num = (unsigned long long)stoll(n);
+        int maxk = log(num) / log(2) + 1;
+        for(int k = maxk; k > 2; k --){
+            ull b = pow(num,1.0/(k-1));
+            ull sum = b + 1;
+            ull ct = 2;
+            while(ct++ < k)
+                sum = sum*b + 1;
+            if(sum == num)
+                return to_string(b);
+            
+        }
+        return to_string(num - 1);
+    }
+};
