@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int magicalString(int n) {
+        vector<int> S{1,2,2};
+        int a = 2, b = 3;
+        while(S.size() < n){
+            for(int i = a; i < b;i++){
+                S.insert(S.end(), S[i], 3 - S.back());
+            }
+            a = b;
+            b = S.size();
+        }
+        return 2*n - accumulate(S.begin(), S.begin() + n,0);
+    }
+};
