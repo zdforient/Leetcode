@@ -1,0 +1,31 @@
+class Solution {
+public:
+    double rad,x,y;
+    Solution(double radius, double x_center, double y_center) {
+        rad = radius;
+        x = x_center;
+        y = y_center;
+    }
+    
+    vector<double> randPoint() {
+        while(1){
+            double a = randf(x-rad,x+rad), b = randf(y-rad,y+rad);
+            if(in_circle(a,b))
+                return vector<double>{a,b};
+        }
+    }
+    
+    double randf(double a, double b){
+        return (((double) rand()) / (double) RAND_MAX)*(b-a) + a;
+    }
+    bool in_circle(double a, double b){
+        double r = sqrt((a-x)*(a-x) + (b-y)*(b-y));
+        return r <= rad;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(radius, x_center, y_center);
+ * vector<double> param_1 = obj->randPoint();
+ */
