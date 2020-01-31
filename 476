@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int findComplement(int num) {
+        for(long long int i = 2; i < 10e30; i*=2){
+            if(num < i)
+                return i - num - 1;
+        }
+        return -1;
+    }
+};
