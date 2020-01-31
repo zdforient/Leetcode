@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int totalHammingDistance(vector<int>& nums) {
+        int output = 0;
+        for(int i = 0; i < 32; i ++){
+            int ct = 0;
+            for(auto n:nums){
+                if(n&(1<<i))
+                    ct ++;
+            }
+            output+= (nums.size()- ct) * ct;
+        
+        }
+        return output;
+    }
+};
