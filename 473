@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool makesquare(vector<int>& nums) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if(sum % 4 || nums.size() < 4)
+            return false;
+        int target = sum / 4;
+        int part[4] = {0};
+        sort(nums.rbegin(), nums.rend());
+        return dfs(nums,part,0,target);
+    }
+    bool dfs(vector<int>& nums, int *part, int n0, int target){
+        if(n0 == nums.size())
+            return part[0] == target && part[1] == target && part[2] == target;
+        if(part[0] > target || part[1] > target || part[2] > target || part[3] >target)
+            return false;
+        for(int i = 0; i < 4; i ++){
+            part[i] += nums[n0];
+                if(dfs(nums, part, n0+1, target))
+                    return true;
+            part[i] -= nums[n0];
+        }
+        return false;
+    }
+};
