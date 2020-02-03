@@ -1,0 +1,67 @@
+class Solution {
+public:
+    string validIPAddress(string IP) {
+        string optional[3] = {"IPv4", "IPv6", "Neither"};
+        if(ispv4(IP))
+            return optional[0];
+        if(ispv6(IP))
+            return optional[1];
+        return optional[2];
+    }
+    bool ispv4(string IP){
+        vector<string> strs;
+        for(int i = 0, j = 0; i < IP.size(); i ++){
+            if(IP[i] == '.'){
+                strs.push_back(IP.substr(j,i-j));
+                j = i+1;
+            }
+            if(i == IP.size() - 1)
+                strs.push_back(IP.substr(j,i-j+1));
+        }
+        for(auto i:strs){
+            for(int j = 0; j < i.size(); j ++){
+                if(i[j]< '0' || i[j]>'9')
+                    return false;
+            }
+
+            if(i.size() > 1 && i[0] == '0')
+                return false;
+            if(!i.size() || i.size() > 4)
+                return false;
+            
+            int n = stoi(i);
+            if(n > 255)
+                return false;
+        }
+        if(strs.size() != 4)
+            return false;
+        return true;
+    }
+    bool ispv6(string IP){
+        vector<string> strs;
+        for(int i = 0, j = 0; i < IP.size(); i ++){
+            if(IP[i] == ':'){
+                strs.push_back(IP.substr(j,i-j));
+                j = i+1;
+            }
+            if(i == IP.size() - 1)
+                strs.push_back(IP.substr(j,i-j+1));
+        }
+        for(auto i:strs){
+            for(int j = 0; j < i.size(); j ++){
+                cout<<i[j];
+                if(!(i[j]>= '0' && i[j]<='9'))
+                    if(!(i[j]>= 'a' && i[j]<='f'))
+                        if(!(i[j]>= 'A' && i[j]<='F'))
+                            return false;
+            }
+            if(i.size() > 4)
+                return false;
+            if(!i.size())
+                return false;
+        }
+        if(strs.size() != 8)
+            return false;
+        return true;
+    }
+};
