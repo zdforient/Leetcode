@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int findSubstringInWraproundString(string p) {
+        unordered_map<char, int> M;
+        for(int i = 0; i < 26; i++)
+            M['a' + i] = 0;
+        for(int i = 0, n = 0, k = 0; i < p.size(); i ++){
+            if(nearby(i-1,i,p)){
+                n ++;
+                for(int j = k; j <= i; j ++){
+                    if(M[p[j]] < (i - j + 1))
+                        M[p[j]] = (i - j + 1);
+                    else
+                        break;
+                }
+                
+            }
+            else{
+                k = i;
+                n = 1;
+                M[p[k]] = max(M[p[k]],1);
+            }
+        }
+        int output = 0;
+        for(auto i:M){
+            output += i.second;
+            //if(i.second)
+                //cout<<i.first<<i.second<<endl;
+        }
+        return output;
+        
+    }
+    
+    bool nearby(int i, int j, string p){
+        if(j == 0)
+            return true;
+        char a = p[i], b = p[j];
+        if(a == b - 1 || (a == 'z' && b == 'a'))
+            return true;
+        else
+            return false;
+    }
+};
