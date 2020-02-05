@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int mem[1<<20] = {};
+    bool canIWin(int M, int T) {
+        int sum = M*(M+1) / 2;
+        if(T<2)
+            return true;
+        else if(sum < T)
+            return false;
+        else if(sum == T)
+            return M%2;
+        else return dfs(M,T,0);
+    }
+    bool dfs(int M, int T, int k){
+        if(mem[k] != 0)
+            return mem[k] > 0;
+        if(T <= 0)
+            return false;
+        for(int i = 0; i < M; i ++)
+            if(!(k&(1<<i)) && !dfs(M,T-i-1,k|(1<<i))){
+                mem[k] = 1;
+                return true;
+            }
+        mem[k] = -1;
+        return false;
+    }
+};
