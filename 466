@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int getMaxRepetitions(string s1, int n1, string s2, int n2) {
+        int m1 = s1.size(), m2 = s2.size();
+        vector<int> repeated(m2+1,0), visited(m2+1,-1);
+        visited[0] = 0;
+        int k = 0, cnt = 0;
+        for(int i = 1; i <= n1; i ++){
+            for(int j = 0; j < m1; j ++){
+                if(s1[j] == s2[k]){
+                    k++;
+                    if(k == m2){
+                        k = 0;
+                        cnt ++;
+                    }
+                }
+            }
+            if(visited[k] == -1){
+                repeated[i] = cnt;
+                visited[k] = i;
+            }
+            else{
+                int start = visited[k], p = i - start, t = cnt - repeated[start];
+                int ans = (n1 - start) / p * t + repeated[(n1-start)%p + start];
+                return ans/n2;
+            }
+                
+        }
+        return cnt / n2;
+    }
+};
