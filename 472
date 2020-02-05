@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<string> output;
+    unordered_set<string> dict;
+    int min_len = 1;
+    bool isConcatenated(string word){
+        if(dict.count(word)) return true;
+        for(int i = min_len; i < word.size() - min_len + 1; ++i){
+            if(dict.count(word.substr(0,i)) && isConcatenated(word.substr(i,word.size() - i)))
+                return true;
+        }
+        return false;
+    }
+    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {
+        std::sort(words.begin(), words.end(), [](const std::string &s1, const std::string &s2) {return s1.size() < s2.size(); });
+        min_len = max(1ul, words.front().size());
+        for(int i = 0; i < words.size(); dict.insert(words[i++]))
+            if(words[i].size() >= min_len*2 && isConcatenated(words[i]))
+                output.push_back(words[i]);
+        return output;
+    }
+};
