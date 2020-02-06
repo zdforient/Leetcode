@@ -1,0 +1,54 @@
+class LFUCache {
+public:
+    int cap;
+    int size;
+    int minF;
+    unordered_map<int, pair<int,int>> m;
+    unordered_map<int, list<int>::iterator> miter;
+    unordered_map<int, list<int>> fm;
+    LFUCache(int capacity) {
+        cap = capacity;
+        size = 0;
+    }
+    
+    int get(int key) {
+        if(m.count(key) == 0)
+            return -1;
+        fm[m[key].second].erase(miter[key]);
+        m[key].second++;
+        fm[m[key].second].push_back(key);
+        miter[key] = --fm[m[key].second].end();
+        if(fm[minF].size() == 0)
+            minF++;
+        return m[key].first;
+    }
+    
+    void put(int key, int value) {
+        if(cap <= 0)
+            return;
+        int stV = get(key);
+        if(stV != -1){
+            m[key].first = value;
+            return;
+        }
+        if(size >= cap){
+            m.erase(fm[minF].front());
+            miter.erase(fm[minF].front());
+            fm[minF].pop_front();
+            size--;
+        }
+        m[key] = {value,1};
+        fm[1].push_back(key);
+        miter[key] = --fm[1].end();
+        minF = 1;
+        size ++;
+        
+    }
+};
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache* obj = new LFUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
