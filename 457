@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool circularArrayLoop(vector<int>& nums) {
+        for(int i = 0; i < nums.size(); i ++){
+            if(nums[i] < 1001)
+                if(testnum(nums, i))
+                    return true;
+        }
+        return false;
+    }
+    bool testnum(vector<int>& nums, int i0){
+        int L = nums.size(), pre_loc = i0;
+        int loc = (nums[i0]+i0 + 1000*L)%L, no = i0 + 1001, ok = i0 + 10000;
+        //cout<<pre_loc<<loc<<nums[2]<<endl;
+        int si = nums[i0];
+        nums[pre_loc] = ok;
+        while(1){
+            //cout<<nums[loc]<<"@"<<loc<<pre_loc<<i0<<si<<endl;
+            if(pre_loc == loc || (nums[loc] > 1000 && nums[loc] != ok) || (nums[loc]*si < 0 && nums[loc] != ok)){
+                return false;
+            }
+            else if(nums[loc] == ok){
+                return true;
+            }
+            else{
+                pre_loc = loc;
+                loc = (nums[loc]+loc+1000*L)%L;
+                nums[pre_loc] = ok;
+            }
+        }
+        return false;
+    }
+};
