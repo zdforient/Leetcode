@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int,int> AB;
+        for(auto a:A){
+            for(auto b:B)
+                AB[a+b] ++;
+        }  
+        int cnt = 0;
+        for(auto c:C)
+            for(auto d:D)
+                if(AB.find(-c-d) != AB.end())
+                    cnt += AB[-c-d];
+        return cnt;
+    }
+};
+
+
+
+
+class Solution:
+    def fourSumCount(self, A: List[int], B: List[int], C: List[int], D: List[int]) -> int:
+        AB = collections.Counter(a+b for a in A for b in B)
+        return sum(AB[-c-d] for c in C for d in D)
