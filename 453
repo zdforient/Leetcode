@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int minMoves(vector<int>& nums) {
+        int mi = nums[0];
+        int mov = 0;
+        for(auto i:nums)
+            mi = min(mi,i);
+        for(auto i:nums)
+            mov += i - mi;
+        return mov;
+    }
+};
