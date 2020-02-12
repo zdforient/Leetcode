@@ -1,0 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(!root)
+            return root;
+        if(root->val == key){
+            if(!root->right)
+                return root->left;
+            else{
+                TreeNode *tree = root->right;
+                while(tree->left)
+                    tree = tree->left;
+                swap(root->val, tree->val);
+                root->right = deleteNode(root->right, key);
+                return root;
+            }
+        }
+        if(root->val > key)
+            root->left = deleteNode(root->left, key);
+        else
+            root->right = deleteNode(root->right, key);
+        return root;
+    }
+};
