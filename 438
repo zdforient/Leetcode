@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> si(26,0), pi(26,0), output;
+        if(s.size() < p.size())
+            return output;
+        for(int i = 0; i < p.size(); i++){
+            si[s[i]-'a']++;
+            pi[p[i]-'a']++;
+        }
+        if(si == pi)
+            output.push_back(0);
+        for(int i = 0; i+p.size() < s.size();i++){
+            si[s[i]-'a']--;
+            si[s[i+p.size()]-'a']++;
+            if(si == pi)
+                output.push_back(i+1);
+        }
+        return output;
+    }
+};
