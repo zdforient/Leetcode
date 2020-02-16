@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<int> findRightInterval(vector<vector<int>>& intervals) {
+        vector<int> output(intervals.size(), -1);
+        if(intervals.size() < 2)
+            return output;
+        for(int i = 0; i < intervals.size(); i++){
+            for(int j = i+1; j < intervals.size(); j ++){
+                if(intervals[i][0] >= intervals[j][1]){
+                    if(output[j] == -1){
+                        output[j] = i;
+                    }
+                    else{
+                        int x = output[j];
+                        int y = intervals[x][0];
+                        if(intervals[i][0] < y)
+                            output[j] = i;
+                    }
+                }
+                else if(intervals[i][1] <= intervals[j][0]){
+                    if(output[i] == -1){
+                        output[i] = j;
+                    }
+                    else{
+                        int x = output[i];
+                        int y = intervals[x][0];
+                        if(intervals[j][0] < y)
+                            output[i] = j;
+                    }
+                }
+            }
+        }
+        return output;
+    }
+};
+
+class Solution {
+public:
+    vector<int> findRightInterval(vector<Interval>& A) {
+        int n = A.size();
+        vector<int> ans(n,-1);
+        map<int,int> dict;
+        
+        for (int i = n-1; i >= 0; i--) dict[A[i].start] = i;
+        for (int i = 0; i < n; i++) {
+            auto iter = dict.lower_bound(A[i].end);
+            if (iter != dict.end()) ans[i] = iter->second;
+        }
+        return ans;
+    }
+};
