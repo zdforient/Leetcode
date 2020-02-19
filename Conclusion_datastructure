@@ -1,0 +1,2 @@
+1. using a new Link and pointing to the head node and return Link->next will solve the special head link case;
+2. 
