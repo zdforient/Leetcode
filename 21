@@ -39,3 +39,43 @@ class Solution:
                 a, b = b, a
             a.next = self.mergeTwoLists(a.next, b)
         return a or b
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        if(!l1)
+            return l2;
+        if(!l2)
+            return l1;
+        ListNode *l0, *li, *la;
+        l0 = new ListNode(INT_MIN);
+        li = l0;
+        while(l1 && l2){
+            if(l1->val <= l2->val){
+                la = new ListNode(l1->val);
+                l0->next = la;
+                l0 = l0->next;
+                l1 = l1->next;
+            }
+            else{
+                la = new ListNode(l2->val);
+                l0->next = la;
+                l0 = l0->next;
+                l2 = l2->next;
+            }
+        }
+        if(l1)
+            l0->next = l1;
+        else
+            l0->next = l2;
+        return li->next;
+    }
+};
