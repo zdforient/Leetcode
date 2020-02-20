@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        if(matrix.size() == 0 || matrix[0].size() == 0)
+            return matrix;
+        int h = matrix.size(), w = matrix[0].size();
+        vector<vector<int>> output, temp;
+        output = matrix;
+        int sm = 1;
+        while(sm){
+            sm = 0;
+            temp = matrix;
+            for(int i = 0; i < h; i ++){
+                for(int j = 0; j < w; j++){
+                    if(matrix[i][j] == 0)
+                        continue;
+                    else if ((!i || matrix[i-1][j]) && (!j || matrix[i][j-1]) && (i == h-1 || matrix[i+1][j]) && (j == w - 1 || matrix[i][j+1])){
+                        output[i][j] ++;
+                        sm ++;                        
+                    }
+                    else
+                        temp[i][j] = 0;
+                }
+            }
+            matrix = temp;
+        }
+        
+        return output;
+    }
+};
