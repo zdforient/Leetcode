@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string mostCommonWord(string paragraph, vector<string>& banned) {
+        unordered_map<string, int> m;
+        string s = "";
+        for(int i = 0; i < paragraph.size(); i ++){
+            if(isalpha(paragraph[i])){
+                char c = paragraph[i] < 'a'? paragraph[i]-'A'+'a':paragraph[i];
+                s.insert(s.size(),1,c);
+            }
+            else if(s.size()){
+                m[s]++;
+                //cout<<s<<endl;
+                s = "";
+            }
+        }
+        if(s.size())
+            m[s]++;
+        string output;
+        int f = 0;
+        for(auto i:m){
+            if(find(banned.begin(), banned.end(), i.first) == banned.end() && i.second > f){
+                output = i.first;
+                f = i.second;
+            }
+        }
+        return output;
+    }
+};
