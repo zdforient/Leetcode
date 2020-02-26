@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> prisonAfterNDays(vector<int>& cells, int N) {
+        vector<int> pc0;
+        int n0 = N;
+         while(N--){
+             vector<int> pc(8,0);
+             for(int i = 1; i < 7; i ++){
+                 pc[i] = cells[i-1] == cells[i+1];
+             }
+             cells = pc;
+             if(pc0.empty())
+                 pc0 = pc;
+             else if (pc == pc0)
+                 N = N%(n0-N-1);
+                 
+         }
+        return cells;
+    }
+};
