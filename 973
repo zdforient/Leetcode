@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+        map<long long, vector<vector<int>>> m;
+        int cnt = 0;
+        if(K >= points.size())
+            return points;
+        for(auto p:points){
+            long long dis = p[0]*p[0] + p[1]*p[1];
+            if(cnt < K){
+                m[dis].push_back(p);
+                cnt++;
+            }
+            else{
+                int a = m.rbegin()->first;
+                if(dis < a){
+                    m.rbegin()->second.pop_back();
+                    if(m.rbegin()->second.empty())
+                        m.erase(a);
+                    m[dis].push_back(p);
+                }
+            }
+        }
+        vector<vector<int>> output;
+        for(auto v:m){
+            for(auto p:v.second)
+                output.push_back(p);
+        }
+        return output;
+    }
+};
