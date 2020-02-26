@@ -29,3 +29,25 @@ public:
         return output;
     }
 };
+
+
+class Solution {
+public:
+    vector<vector<int>> kClosest(vector<vector<int>>& p, int K) {
+        int n=p.size();
+        pair<long long, pair<long long, long long>>par[n];
+        for(int i=0; i<n; i++)
+        {
+            long long x=p[i][0], y=p[i][1];
+            par[i]=make_pair(x*x+y*y, make_pair(x, y));
+        }
+        sort(par, par+n);
+        vector<vector<int>> ans(K);
+        for(int i=0; i<K; i++)
+        {
+            ans[i].resize(2);
+            ans[i]={par[i].second.first, par[i].second.second};
+        }
+        return ans;
+    }
+};
