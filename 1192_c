@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<int> ids;
+    vector<int> low;
+    vector<bool> visited;
+    int id;
+    unordered_map<int,vector<int>> g;
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& connections) {
+        
+        for(int i = 0; i < connections.size(); i++){
+            int a = connections[i][0];
+            int b = connections[i][1];
+            g[a].push_back(b);
+            g[b].push_back(a);
+            
+        }
+        id = 1;
+        ids = vector<int>(n+1,-1);
+        low = ids;
+        visited = vector<bool>(n+1,0);
+        vector<vector<int>> output;
+        for(int i = 0; i < n; i ++){
+            if(!visited[i])
+                dfs(i,-1,output);
+        }
+        return output;
+    }
+    
+    void dfs(int at, int parent, vector<vector<int>> &output){
+        visited[at] = true;
+        low[at] = ids[at] = id;
+        id++;
+        for(auto to:g[at]){
+            if(to == parent) continue;
+            if(!visited[to]){
+                dfs(to,at,output);
+                low[at] = min(low[at], low[to]);
+                if(ids[at] < low[to])
+                    output.push_back(vector<int>{at,to});
+            }
+            else
+                low[at] = min(low[at], ids[to]);
+        }
+    }
+};
